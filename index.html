@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Для Сальмины 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="stars" id="stars"></div>
+
+    <!-- Кнопка музыки -->
+    <button class="music-btn" id="musicBtn" title="Включить/выключить музыку">
+      🎵
+    </button>
+
+    <!-- ЭКРАН 1: КОНВЕРТ -->
+    <div class="envelope-screen" id="envelopeScreen">
+      <div class="envelope-wrapper">
+        <div class="envelope" id="envelope">
+          <div class="envelope-back"></div>
+          <div class="letter"></div>
+          <div class="envelope-flap"></div>
+          <div class="envelope-front"></div>
+          <div class="envelope-bottom"></div>
+          <div class="wax-seal">❤</div>
+        </div>
+
+        <div class="text-below">
+          <p class="hint">Тебе письмо, Сальмина 💌</p>
+          <p class="click-text">Сальмина, нажми...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ЭКРАН 2: ПРИЗНАНИЕ -->
+    <div class="love-screen" id="loveScreen">
+      <div class="hearts-bg" id="heartsBg"></div>
+
+      <div class="content">
+        <h1 class="title">Для Сальмины</h1>
+        <h2 class="name">❤ Ты — моё всё ❤</h2>
+
+        <!-- РАМКА С ТЕКСТОМ -->
+        <div class="letter-box">
+          <!-- Секретное слово "вселенная" добавлено в тексте через JS -->
+          <p class="typed-text" id="text-container"></p>
+        </div>
+
+        <div class="signature" id="signature">Навсегда , буду твоим ❤</div>
+
+        <button class="love-btn" id="loveBtn">Нажми на меня 💗</button>
+
+        <!-- БЛОК С ФОТО И ЦВЕТКОМ -->
+        <div class="extra-section">
+          <!-- Полароиды -->
+          <div class="polaroids">
+            <div class="polaroid">
+              <div class="polaroid-img">
+                <img src="photo1.PNG" alt="Фото 1" />
+              </div>
+              <p>Твоя улыбка</p>
+            </div>
+            <div class="polaroid">
+              <div class="polaroid-img">
+                <img src="photo2.PNG" alt="Фото 2" />
+              </div>
+              <p>Самая красивая</p>
+            </div>
+            <div class="polaroid">
+              <div class="polaroid-img">
+                <img src="photo3.PNG" alt="Фото 3" />
+              </div>
+              <p>Во всем мире</p>
+            </div>
+          </div>
+
+          <!-- Цветок с комплиментами -->
+          <div class="flower-wrapper">
+            <button class="flower-btn" id="flowerBtn">🌸 Сорвать цветок</button>
+            <div class="compliment" id="complimentBox"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Финальное окно с крестиком -->
+      <div class="final-message" id="finalMessage">
+        <button class="close-btn" id="closeBtn">✕</button>
+        <div class="final-content">
+          <h2>Сальмина, ты самое дорогое, что у меня есть 💖</h2>
+          <p>Я хочу прожить с тобой всю жизнь...</p>
+          <p>Ты согласна? 🥺</p>
+          <button id="yesBtn">Да 💍</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Окно для просмотра фото -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose">✕</button>
+      <img src="" alt="Увеличенное фото" id="lightboxImg" />
+    </div>
+
+    <audio id="bgMusic" loop>
+      <source src="music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>

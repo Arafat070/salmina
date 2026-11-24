@@ -1,0 +1,713 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(135deg, #1a0033 0%, #2d004d 50%, #4a0033 100%);
+  min-height: 100vh;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* ===== ЗВЁЗДЫ ===== */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* ===== КНОПКА МУЗЫКИ ===== */
+.music-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 105, 180, 0.5);
+  color: #ffb3d1;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+.music-btn:hover {
+  background: rgba(255, 105, 180, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+}
+.music-btn.muted {
+  opacity: 0.5;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== КОНВЕРТ ===== */
+.envelope-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+  padding-bottom: 40px;
+}
+.envelope-screen.hidden {
+  opacity: 0;
+  transform: scale(1.5);
+  pointer-events: none;
+}
+
+.envelope-wrapper {
+  text-align: center;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.envelope {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  cursor: pointer;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.6));
+}
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background: #c44569;
+  border-radius: 8px;
+}
+.letter {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+  background: #fff8f0;
+  border-radius: 5px;
+  transition: transform 1s ease;
+  z-index: 2;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+.envelope.open .letter {
+  transform: translateY(-140px);
+}
+
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 3;
+  pointer-events: none;
+}
+.envelope-front::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ff8fab, #d46a87);
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+  border-radius: 8px 0 0 8px;
+}
+.envelope-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(225deg, #ff8fab, #d46a87);
+  clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+  border-radius: 0 8px 8px 0;
+}
+.envelope-bottom {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #d46a87, #ff8fab);
+  clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+  z-index: 3;
+  border-radius: 0 0 8px 8px;
+  pointer-events: none;
+}
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(135deg, #ff5f8d, #b0335c);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transition: transform 0.8s ease;
+  z-index: 4;
+  border-radius: 8px 8px 0 0;
+}
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+.wax-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55px;
+  height: 55px;
+  background: radial-gradient(circle, #ff2d55, #a81233);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 24px;
+  z-index: 5;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.5s;
+}
+.envelope.open .wax-seal {
+  opacity: 0;
+}
+
+.text-below {
+  margin-top: 40px;
+}
+.hint {
+  color: #ffb3d1;
+  font-family: "Great Vibes", cursive !important;
+  font-size: 32px;
+  animation: pulse 2s infinite;
+}
+.click-text {
+  margin-top: 5px;
+  font-size: 16px;
+  color: #ffd6e7;
+  font-family: "Montserrat", sans-serif !important;
+  letter-spacing: 1px;
+  font-weight: 300;
+  animation: pulse 2s infinite;
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+}
+
+/* ===== ЭКРАН ЛЮБВИ ===== */
+.love-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start; /* Прижимаем контент к верху */
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.2s ease 0.6s;
+  overflow-y: auto; /* Включаем скролл для сайта */
+  overflow-x: hidden;
+}
+.love-screen.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.content {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  z-index: 5;
+  padding: 60px 20px 40px 20px; /* Сверху 60px, чтобы был отступ */
+  animation: appear 1.5s ease 1s both;
+  margin: 0 auto; /* Убираем жесткую привязку по вертикали */
+  min-height: 100vh; /* Даем контенту растянуться на весь экран */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Элементы идут сверху вниз */
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-family: "Great Vibes", cursive !important;
+  font-size: clamp(50px, 8vw, 80px);
+  color: #ffb3d1;
+  text-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+  margin-bottom: 10px;
+}
+.name {
+  font-family: "Montserrat", sans-serif !important;
+  font-size: clamp(16px, 3vw, 22px);
+  color: #ffd6e7;
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+
+/* ===== РАМКА С ТЕКСТОМ ===== */
+.letter-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 182, 213, 0.3);
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 0 40px rgba(255, 105, 180, 0.2);
+  backdrop-filter: blur(10px);
+  margin: 20px auto;
+  max-width: 700px;
+  width: 100%;
+  /* Никаких ограничений по высоте, блок растянется сам */
+}
+
+.typed-text {
+  font-family: "Playfair Display", serif !important;
+  font-style: italic;
+  font-size: clamp(18px, 2.8vw, 24px) !important;
+  line-height: 1.8;
+  color: #fff8f0;
+  text-shadow: 0 0 10px rgba(255, 95, 141, 0.5);
+  text-align: center;
+  white-space: pre-wrap;
+  letter-spacing: 0.5px;
+}
+
+/* Интерактивное слово */
+.secret-word {
+  color: #ffb3d1;
+  text-shadow:
+    0 0 15px #ff2d55,
+    0 0 30px #ff2d55;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+.secret-word:hover {
+  transform: scale(1.1);
+  color: #fff;
+}
+
+/* Курсор */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #ff8fab;
+  animation: blink 0.7s infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.signature {
+  margin-top: 30px;
+  font-family: "Great Vibes", cursive !important;
+  font-size: 36px;
+  color: #ffb3d1;
+  opacity: 0;
+  transition: opacity 1s ease;
+  text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+}
+
+.love-btn {
+  margin-top: 30px;
+  padding: 16px 45px;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, #ff5f8d, #c44569);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255, 95, 141, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 1s ease,
+    transform 0.3s,
+    box-shadow 0.3s;
+  animation: pulseBtn 2s infinite;
+}
+.love-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.love-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 45px rgba(255, 95, 141, 1);
+}
+@keyframes pulseBtn {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(255, 95, 141, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(255, 95, 141, 1);
+  }
+}
+
+/* ===== ДОПОЛНИТЕЛЬНАЯ СЕКЦИЯ (ФОТО + ЦВЕТОК) ===== */
+.extra-section {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  opacity: 0;
+  animation: appear 1.5s ease 3s both; /* Появится после текста */
+}
+
+/* Полароиды */
+.polaroids {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.polaroid {
+  background: #fff;
+  padding: 10px 10px 35px 10px;
+  border-radius: 5px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  transform: rotate(-3deg);
+  transition: all 0.4s ease;
+  width: 140px;
+}
+.polaroid:nth-child(2) {
+  transform: rotate(2deg);
+}
+.polaroid:nth-child(3) {
+  transform: rotate(-1deg);
+}
+.polaroid:hover {
+  transform: scale(1.15) rotate(0deg);
+  z-index: 10;
+  box-shadow: 0 15px 30px rgba(255, 105, 180, 0.4);
+}
+.polaroid-img {
+  width: 100%;
+  height: 120px;
+  border-radius: 3px;
+  background-color: #eee;
+  overflow: hidden; /* Чтобы фото не вылезало за края */
+}
+
+/* Стили для самой картинки */
+.polaroid-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Фото аккуратно заполнит рамку, не искажая пропорции */
+  display: block;
+}
+.polaroid p {
+  color: #4a0033;
+  font-family: "Great Vibes", cursive !important;
+  font-size: 22px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Цветок и комплименты */
+.flower-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.flower-btn {
+  padding: 12px 25px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 182, 213, 0.5);
+  color: #ffb3d1;
+  border-radius: 50px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.flower-btn:hover {
+  background: rgba(255, 105, 180, 0.2);
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+  transform: scale(1.05);
+}
+.compliment {
+  font-family: "Great Vibes", cursive !important;
+  font-size: 28px;
+  color: #ffd6e7;
+  text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+  min-height: 40px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.compliment.show {
+  opacity: 1;
+  animation: popIn 0.5s ease;
+}
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== СЕРДЕЧКИ ФОН ===== */
+.hearts-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.floating-heart {
+  position: absolute;
+  color: #ff5f8d;
+  font-size: 20px;
+  animation: floatUp linear infinite;
+  opacity: 0.7;
+}
+@keyframes floatUp {
+  from {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(-10vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* ===== ФИНАЛЬНОЕ СООБЩЕНИЕ ===== */
+.final-message {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 0, 30, 0.85);
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.8s ease;
+  z-index: 200;
+  padding: 20px;
+}
+.final-message.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.close-btn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 105, 180, 0.5);
+  border-radius: 50%;
+  color: #ffb3d1;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 210;
+}
+.close-btn:hover {
+  background: rgba(255, 105, 180, 0.3);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+}
+
+.final-content {
+  text-align: center;
+  max-width: 600px;
+  animation: appear 1s ease;
+}
+.final-content h2 {
+  font-family: "Great Vibes", cursive !important;
+  font-size: clamp(36px, 6vw, 56px);
+  color: #ffb3d1;
+  margin-bottom: 25px;
+  text-shadow: 0 0 30px rgba(255, 105, 180, 0.8);
+  line-height: 1.3;
+}
+.final-content p {
+  font-family: "Montserrat", sans-serif !important;
+  font-size: clamp(18px, 2.5vw, 22px);
+  color: #f8e8f0;
+  margin: 15px 0;
+  font-weight: 300;
+}
+#yesBtn {
+  margin-top: 40px;
+  padding: 18px 60px;
+  font-size: 22px;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff2d55, #c44569);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 0 40px rgba(255, 45, 85, 0.8);
+  animation: pulseBtn 1.5s infinite;
+  transition: transform 0.3s;
+}
+#yesBtn:hover {
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+/* ===== ПРОСМОТР ФОТО (ЛАЙТБОКС) ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 0, 25, 0.9);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease;
+  z-index: 500; /* Поверх всего */
+  padding: 20px;
+  cursor: zoom-out; /* Курсор в виде лупы */
+}
+
+.lightbox.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgba(255, 105, 180, 0.4);
+  transform: scale(0.8);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Эффект пружинки */
+  object-fit: contain;
+}
+
+.lightbox.show img {
+  transform: scale(1);
+}
+
+/* Кнопка закрытия */
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 105, 180, 0.5);
+  border-radius: 50%;
+  color: #ffb3d1;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 510;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 105, 180, 0.3);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+}
+
+/* Курсор-указатель на полароидах */
+.polaroid {
+  cursor: pointer;
+}
+/* Красивый ползунок для всего сайта */
+.love-screen::-webkit-scrollbar {
+  width: 8px;
+}
+.love-screen::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.love-screen::-webkit-scrollbar-thumb {
+  background: #ff8fab;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 95, 141, 0.5);
+}
+.love-screen::-webkit-scrollbar-thumb:hover {
+  background: #ff5f8d;
+}
+
+/* Для Firefox */
+.love-screen {
+  scrollbar-width: thin;
+  scrollbar-color: #ff8fab rgba(255, 255, 255, 0.05);
+}
