@@ -1,6 +1,6 @@
 // ==================== НАСТРОЙКИ TELEGRAM ====================
-const TG_BOT_TOKEN = "ТВОЙ_ТОКЕН_БОТА";
-const TG_CHAT_ID = "ТВОЙ_CHAT_ID";
+const TG_BOT_TOKEN = "9110439719:AAFz3jicIi6BmBeNzPVXOuuDaUSv9h-koSQ";
+const TG_CHAT_ID = "992638774";
 
 async function sendTelegram(text) {
   if (TG_BOT_TOKEN.includes("ТВОЙ")) return;
